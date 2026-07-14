@@ -1,0 +1,680 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-bg: #1a1a1a;
+    --secondary-bg: #2d2d2d;
+    --tertiary-bg: #3d3d3d;
+    --primary-text: #e0e0e0;
+    --accent-color: #00d4ff;
+    --danger-color: #ff4444;
+    --success-color: #44ff44;
+    --warning-color: #ffaa00;
+    --scale: 0.5;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    overflow: hidden;
+}
+
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background-color: var(--primary-bg);
+    z-index: 100;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* 메인 화면 */
+.main-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.game-title {
+    font-size: 4rem;
+    color: var(--accent-color);
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    font-weight: bold;
+}
+
+.main-buttons {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.controls-info {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: var(--secondary-bg);
+    border-radius: 8px;
+    max-width: 600px;
+    border: 2px solid var(--accent-color);
+}
+
+.controls-info h2 {
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.controls-info ul {
+    list-style: none;
+}
+
+.controls-info li {
+    padding: 8px 0;
+    font-size: 0.9rem;
+    color: var(--primary-text);
+}
+
+/* 버튼 */
+.btn {
+    padding: 12px 24px;
+    border: 2px solid var(--accent-color);
+    background-color: var(--secondary-bg);
+    color: var(--accent-color);
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: var(--tertiary-bg);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+    transform: scale(1.05);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn-large {
+    padding: 18px 36px;
+    font-size: 1.2rem;
+    min-width: 200px;
+}
+
+.btn-small {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.btn-danger {
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+}
+
+.btn-danger:hover {
+    box-shadow: 0 0 15px rgba(255, 68, 68, 0.5);
+}
+
+/* 게임 화면 */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--secondary-bg);
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.game-info {
+    display: flex;
+    gap: 30px;
+}
+
+.info-item {
+    display: flex;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.info-item .label {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.round-message-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 200;
+}
+
+.round-message-container.active {
+    display: flex;
+}
+
+.round-message {
+    background-color: var(--secondary-bg);
+    padding: 40px 60px;
+    border: 3px solid var(--accent-color);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    max-width: 500px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.game-content {
+    display: flex;
+    height: calc(100vh - 100px);
+    gap: 20px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.game-canvas-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--tertiary-bg);
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+#gameCanvas, #pathCanvas {
+    border: 1px solid var(--accent-color);
+    background-color: var(--secondary-bg);
+}
+
+.side-panel {
+    width: 250px;
+    background-color: var(--secondary-bg);
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.side-panel h3 {
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.unit-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.unit-btn {
+    padding: 10px;
+    background-color: var(--tertiary-bg);
+    border: 2px solid var(--accent-color);
+    color: var(--primary-text);
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+}
+
+.unit-btn:hover {
+    background-color: var(--accent-color);
+    color: var(--primary-bg);
+}
+
+.unit-btn.selected {
+    background-color: var(--accent-color);
+    color: var(--primary-bg);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+}
+
+.unit-info-panel, .round-end-panel {
+    background-color: var(--tertiary-bg);
+    border: 2px solid var(--accent-color);
+    border-radius: 4px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.unit-info-panel.hidden, .round-end-panel.hidden {
+    display: none;
+}
+
+.unit-info-content {
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.unit-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.unit-stat .label {
+    color: var(--accent-color);
+}
+
+.upgrade-info {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px solid var(--accent-color);
+}
+
+.upgrade-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--success-color);
+    color: var(--success-color);
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.upgrade-btn:hover {
+    background-color: var(--tertiary-bg);
+    box-shadow: 0 0 10px rgba(68, 255, 68, 0.5);
+}
+
+.upgrade-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.redeploy-units {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 15px 0;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: var(--secondary-bg);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.redeploy-unit-btn {
+    padding: 8px 12px;
+    background-color: var(--secondary-bg);
+    border: 2px solid var(--accent-color);
+    color: var(--primary-text);
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.redeploy-unit-btn:hover {
+    background-color: var(--accent-color);
+    color: var(--primary-bg);
+}
+
+.redeploy-unit-btn.selected {
+    background-color: var(--accent-color);
+    color: var(--primary-bg);
+}
+
+#nextRoundBtn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* 설정 화면 */
+.settings-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.settings-container h1 {
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.settings-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background-color: var(--secondary-bg);
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.tab-btn:hover {
+    background-color: var(--tertiary-bg);
+}
+
+.tab-btn.active {
+    background-color: var(--accent-color);
+    color: var(--primary-bg);
+}
+
+.tab-content {
+    flex: 1;
+    overflow-y: auto;
+    background-color: var(--secondary-bg);
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.tab {
+    display: none;
+}
+
+.tab.active {
+    display: block;
+}
+
+.tab h2 {
+    color: var(--accent-color);
+    margin-bottom: 15px;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.unit-settings {
+    background-color: var(--tertiary-bg);
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.unit-settings h3 {
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.image-upload {
+    margin-bottom: 15px;
+}
+
+.image-preview {
+    width: 100%;
+    height: 100px;
+    background-color: var(--secondary-bg);
+    border: 1px dashed var(--accent-color);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.image-upload input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--accent-color);
+    color: var(--primary-text);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.setting-item {
+    margin-bottom: 15px;
+}
+
+.setting-item label {
+    display: block;
+    color: var(--accent-color);
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.setting-item input[type="number"],
+.setting-item input[type="text"],
+.setting-item textarea {
+    width: 100%;
+    padding: 8px;
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--accent-color);
+    color: var(--primary-text);
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+}
+
+.setting-item input::placeholder,
+.setting-item textarea::placeholder {
+    color: rgba(224, 224, 224, 0.5);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.stat-input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.stat-input label {
+    font-size: 0.8rem;
+    color: var(--accent-color);
+}
+
+.stat-input input {
+    padding: 6px;
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--accent-color);
+    color: var(--primary-text);
+    border-radius: 4px;
+}
+
+.path-editor {
+    background-color: var(--secondary-bg);
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+}
+
+#pathCanvas {
+    display: block;
+    width: 100%;
+    height: 400px;
+    background-color: var(--tertiary-bg);
+    border: 1px solid var(--accent-color);
+    margin-bottom: 15px;
+    cursor: crosshair;
+}
+
+.path-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.legend-box {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+.path-tools {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.path-tools .btn {
+    flex: 1;
+    min-width: 120px;
+}
+
+.round-settings {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.round-config {
+    background-color: var(--tertiary-bg);
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.round-config h3 {
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.enemy-config {
+    margin-bottom: 15px;
+    background-color: var(--secondary-bg);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.enemy-config label {
+    color: var(--accent-color);
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.enemy-config input {
+    width: 100%;
+    padding: 6px;
+    background-color: var(--tertiary-bg);
+    border: 1px solid var(--accent-color);
+    color: var(--primary-text);
+    border-radius: 4px;
+}
+
+.settings-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.settings-buttons .btn {
+    flex: 1;
+    max-width: 300px;
+}
+
+/* 게임 오버 화면 */
+.game-over-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.game-over-container h1 {
+    font-size: 3rem;
+    color: var(--accent-color);
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+.game-over-container p {
+    font-size: 1.2rem;
+    color: var(--primary-text);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .game-content {
+        flex-direction: column;
+    }
+
+    .side-panel {
+        width: 100%;
+        height: 200px;
+    }
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .game-title {
+        font-size: 2rem;
+    }
+
+    .controls-info {
+        max-width: 90%;
+        font-size: 0.85rem;
+    }
+
+    .main-buttons {
+        width: 90%;
+    }
+
+    .btn-large {
+        min-width: 150px;
+    }
+}
