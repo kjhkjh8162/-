@@ -5,6 +5,7 @@ function showScreen(screenId) {
     const screen = document.getElementById(screenId);
     if (screen) {
         screen.classList.add('active');
+        console.log('화면 전환 성공');
     } else {
         console.error('화면을 찾을 수 없습니다:', screenId);
     }
@@ -55,13 +56,14 @@ function selectUnit(type, btnElement) {
 }
 
 function setupEventListeners() {
-    console.log('이벤트 리스너 설정 중...');
+    console.log('이벤트 리스너 설정 시작...');
     
     // 메인 화면 버튼들
     const startBtn = document.getElementById('startBtn');
     const settingsBtn = document.getElementById('settingsBtn');
     
     if (startBtn) {
+        console.log('startBtn 찾음, 이벤트 추가 중...');
         startBtn.addEventListener('click', () => {
             console.log('게임 시작 클릭됨');
             try {
@@ -78,24 +80,26 @@ function setupEventListeners() {
                 gameLoop();
             } catch (error) {
                 console.error('게임 시작 오류:', error);
-                alert('게임 시작 중 오류가 발생했습니다: ' + error.message);
+                alert('게임 시작 중 오류: ' + error.message);
             }
         });
-        console.log('startBtn 이벤트 추가됨');
+        console.log('startBtn 이벤트 추가 완료');
     } else {
         console.error('startBtn을 찾을 수 없습니다!');
     }
     
     if (settingsBtn) {
+        console.log('settingsBtn 찾음, 이벤트 추가 중...');
         settingsBtn.addEventListener('click', () => {
             console.log('설정 클릭됨');
             try {
                 showScreen('settingsScreen');
             } catch (error) {
                 console.error('설정 화면 전환 오류:', error);
+                alert('설정 화면 오류: ' + error.message);
             }
         });
-        console.log('settingsBtn 이벤트 추가됨');
+        console.log('settingsBtn 이벤트 추가 완료');
     } else {
         console.error('settingsBtn을 찾을 수 없습니다!');
     }
@@ -116,13 +120,6 @@ function setupEventListeners() {
         backToMainBtn.addEventListener('click', () => {
             if (game) game.isRunning = false;
             showScreen('mainScreen');
-        });
-    }
-    
-    const nextRoundBtn = document.getElementById('nextRoundBtn');
-    if (nextRoundBtn) {
-        nextRoundBtn.addEventListener('click', () => {
-            console.log('다음 라운드');
         });
     }
     
